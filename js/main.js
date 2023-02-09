@@ -1,7 +1,8 @@
 
 // loading data from exoplanets.csv (main data file with "" instead of "BLANK")
 
-let data, barchart, scatterplot, numStarsFilter = [];
+let data, barchart, scatterplot
+let numStarsFilter = []
 
 d3.csv('data/exoplanets.csv')
     .then(_data => {
@@ -25,5 +26,8 @@ d3.csv('data/exoplanets.csv')
             d.stellarMass = +d.st_mass;
             d.distance = +d.sy_dist;
             //d.discoveryFacility = +d.disc_facility;
-            })
         })
+           
+            barchart = new Barchart({parentElement: '#barchart' }, _data)
+        })
+        .catch(error => console.error(error));
