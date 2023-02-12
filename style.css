@@ -6,3 +6,7 @@
     stroke: #a0496b;
     stroke-width: 2px;
   }
+text.chart-title {
+   font-weight: bold;
+   font-size: 120%;
+  }

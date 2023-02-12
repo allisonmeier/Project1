@@ -4,9 +4,9 @@ class Barchart {
         this.config = {
             parentElement: defaultConfig.parentElement,
             colorScale: defaultConfig.colorScale,
-            containerWidth: defaultConfig.containerWidth || 600,
+            containerWidth: defaultConfig.containerWidth || 700,
             containerHeight: defaultConfig.containerHeight || 300,
-            margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 40},
+            margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 140},
         }
         this.data = _data
         this.initVis()
@@ -42,7 +42,7 @@ class Barchart {
         //size of the overall svg 
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
-            .attr('height', vis.config.containerHeight)
+            .attr('height', vis.config.containerHeight + 100)
 
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`) 
@@ -56,8 +56,8 @@ class Barchart {
 
         vis.chart.append('text')
             .attr('class', 'axis-title')
-            .attr('y', vis.height)
-            .attr('x', vis.width/2)
+            .attr('y', vis.height + 20)
+            .attr('x', vis.width/2 - 100)
             .attr('dy', '.71em')
             //.style('text-anchor', 'end')
             .text('Stars in System') 
@@ -71,8 +71,8 @@ class Barchart {
     
         vis.svg.append('text')
             .attr('class', 'chart-title')
-            .attr('x', vis.width/2)
-            .attr('y', 0)
+            .attr('x', 100)
+            .attr('y', 330)
             .attr('dy', '.71em')
             .text('Exoplanets per Stars in System') 
 
