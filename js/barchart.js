@@ -118,10 +118,24 @@ class Barchart {
 
     }
 
-    /*Allow a user to understand: 
-        *- how many exoplanets are from systems with 1 star, 2 stars, 3 stars, and so on
-        *- how many exoplanets are in systems with 1 planets, 2 planets, 3 planets and so on 
-        *- how many exoplanets orbit stars of different types:
-            The star types are: A, F, G, K and M  */
+    /*
+    Allow a user to understand: 
+    how many exoplanets are from systems with 1 star, 2 stars, 3 stars, and so on
+    how many exoplanets are in systems with 1 planets, 2 planets, 3 planets and so on 
+    how many exoplanets orbit stars of different types: The star types are: A, F, G, K and M 
+        Include a link which opens a new tab, leading the user to information about star types
+    how many exoplanets were discovered by different methods
+        Include a link that explains the different exoplanet discovery methods 
+    how many exoplanets are within a habitable zone vs outside the habitable zone.   
+        The habitable zone depends on both the distance between the star and the planet, and the type of star. 
+        The habitable zone begins and ends according to the list below (in astronomical units)
+            A - inner =  8.5 AU, outer = 12.5 AU
+            F - inner = 1.5 AU, outer = 2.2 AU
+            G - inner = 0.95 AU, outer = 1.4 AU
+            K - inner = 0.38 AU, outer = 0.56 AU
+            M - inner = 0.08 AU, outer = 0.12 AU
+    Bar charts are a good choice for this.  You may use other approaches- see note below.
+
+    */
 
 }

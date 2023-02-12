@@ -1,0 +1,8 @@
+.chart-area {
+    fill: #f1b5cd;
+  }
+.chart-line {
+    fill: none;
+    stroke: #a0496b;
+    stroke-width: 2px;
+  }
