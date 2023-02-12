@@ -41,3 +41,33 @@ d3.csv('../data/exoplanets.csv')
         })
         
         .catch(error => console.error(error));
+
+
+// Some general functions below here 
+
+function inHabitableZone(starDistance, starType) {
+    /*
+    The habitable zone depends on both the distance between the star and the planet, and the type of star. 
+        It begins and ends according to the list below (in astronomical units)
+            A - inner =  8.5 AU, outer = 12.5 AU
+            F - inner = 1.5 AU, outer = 2.2 AU
+            G - inner = 0.95 AU, outer = 1.4 AU
+            K - inner = 0.38 AU, outer = 0.56 AU
+            M - inner = 0.08 AU, outer = 0.12 AU
+    */
+   
+    if (((starType == 'A') && (starDistance > 8.5) && (starDistance < 12.5))
+        || ((starType == 'F') && (starDistance > 1.5) && (starDistance < 2.2))
+        || ((starType == 'G') && (starDistance > 0.95) && (starDistance < 1.4))
+        || ((starType == 'K') && (starDistance > 0.38) && (starDistance < 0.56))
+        || ((starType == 'M') && (starDistance > 0.08) && (starDistance < 0.12))) {
+            return true
+        } else {
+            return false
+        }
+}
+
+function planetType() {
+
+    
+}
