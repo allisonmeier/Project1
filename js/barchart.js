@@ -5,7 +5,7 @@ class Barchart {
             parentElement: defaultConfig.parentElement,
             colorScale: defaultConfig.colorScale,
             containerWidth: defaultConfig.containerWidth || 600,
-            containerHeight: defaultConfig.containerHeight || 600,
+            containerHeight: defaultConfig.containerHeight || 300,
             margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 40},
         }
         this.data = _data
@@ -21,22 +21,23 @@ class Barchart {
     
         //parametrize?
         vis.colorScale = d3.scaleOrdinal()
-            .range(['#f1b5cd', '#dc6996', '#a0496b', 'blue'])
-            .domain(['One Star', 'Two Stars', 'Three Stars', 'Unknown'])
+            .range(['#f1b5cd', '#dc6996', '#a0496b', 'blue', 'red', 'green'])
+            .domain(['1', '2', '3', '4', ''])
 
         vis.xScale = d3.scaleBand()
-            .range([0, vis.width])
-            .padding(0.1)
+            .range([vis.width - 100, 0])
+            .padding(0.3)
 
         vis.yScale = d3.scaleLinear()
             .range([vis.height, 0])
 
         vis.xAxis = d3.axisBottom(vis.xScale)
-            .ticks(vis.colorScale.domain) //tried something different, test if it works
-            //.tickFormat(d => d + ' km') 
+            .ticks(['1 Star', '2 Stars', '3 Stars', '4 Stars', 'Unknown']) 
+            .tickFormat(d => d + ' stars') 
     
         vis.yAxis = d3.axisLeft(vis.yScale)
-            .ticks(6)
+            .ticks(10)
+            //.tickFormat(d => d + ' exoplanets') 
 
         //size of the overall svg 
         vis.svg = d3.select(vis.config.parentElement)
@@ -55,8 +56,8 @@ class Barchart {
 
         vis.chart.append('text')
             .attr('class', 'axis-title')
-            .attr('y', vis.height - 15)
-            .attr('x', vis.width - 100)
+            .attr('y', vis.height)
+            .attr('x', vis.width/2)
             .attr('dy', '.71em')
             //.style('text-anchor', 'end')
             .text('Stars in System') 
@@ -83,7 +84,7 @@ class Barchart {
         let countedDataMap = d3.rollups(vis.data, v => v.length, d => d.sy_snum)
         vis.countedData = Array.from(countedDataMap, ([thing, numOfThing]) => ({thing, numOfThing}))
 
-        let orderedThings = ['0', '1', '2', '3', '4', '5', '']
+        let orderedThings = ['0', '1', '2', '3', '4', '']
 
         vis.countedData = vis.countedData.sort((a,b) => {
             return orderedThings.indexOf(a.thing) - orderedThings.indexOf(b.thing)
@@ -102,7 +103,7 @@ class Barchart {
     renderVis() {
         let vis = this
 
-        let bars = vis.chart.selectAll('.bar')
+        const bars = vis.chart.selectAll('.bar')
             .data(vis.countedData, vis.xValue)
             .join('rect')
                 .attr('class', 'bar')
@@ -110,7 +111,7 @@ class Barchart {
                 .attr('width', vis.xScale.bandwidth())
                 .attr('height', d => vis.height - vis.yScale(vis.yValue(d)))
                 .attr('y', d => vis.yScale(vis.yValue(d)))
-                .attr('fill', 'blue')
+                .attr('fill', d => vis.colorScale(vis.colorValue(d)))
 
         vis.xAxisG.call(vis.xAxis)
         vis.yAxisG.call(vis.yAxis)

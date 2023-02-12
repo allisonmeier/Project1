@@ -28,6 +28,10 @@ d3.csv('../data/exoplanets.csv')
             //d.disc_facility - discovery facility
         })
            
+        d3.select("#selected-dropdown")
+        d3.select()
+
+
         let barchart = new Barchart({parentElement: '#barchart'}, data)
         barchart.updateVis()
 
