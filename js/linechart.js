@@ -83,6 +83,7 @@ class Linechart {
     }
 
     renderVis() {
+        let vis = this 
 
         vis.chart
             .append("path")
