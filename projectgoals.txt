@@ -25,7 +25,7 @@ Allow a user to understand:
     They should be able to identify the trends in the discoveries. 
         A line chart is a good choice for this.  You may use other approaches- see note below.
 *Show the relationships between exoplanet radius and mass 
-*Also show the planets from our solar system, highlighted though a distinct color and label them.  
+    Also show the planets from our solar system, highlighted though a distinct color and label them.  
     Consider whether to use a linear or logarithmic scale
     A scatterplot is a good choice for this.  You may use other approaches- see note below.
 

@@ -1,7 +1,7 @@
 
 // loading data from exoplanets.csv (main data file with "" instead of "BLANK")
 
-let data, barchart, scatterplot
+let data, barchart, scatterplot, linechart
 let numStarsFilter = []
 
 d3.csv('../data/exoplanets.csv')
@@ -37,6 +37,10 @@ d3.csv('../data/exoplanets.csv')
 
         let linechart = new Linechart({parentElement: '#linechart'}, data)
         linechart.updateVis()
+
+
+        let scatterplot = new Scatterplot({parentElement: '#scatterplot'}, data)
+        scatterplot.updateVis()
 
         })
         
