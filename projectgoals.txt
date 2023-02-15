@@ -3,7 +3,7 @@ C-Goals-------------------------------------------------------------------------
 Show a title for the project, your name.  
 Indicate where the data came from and the libraries you used to visualize the data.  
 Load the exoplanet csv file (or a file derived from this original csv that you have produced by processing the code) 
-Allow a user to understand: 
+*Allow a user to understand: 
     how many exoplanets are from systems with 1 star, 2 stars, 3 stars, and so on
     how many exoplanets are in systems with 1 planets, 2 planets, 3 planets and so on 
     how many exoplanets orbit stars of different types: The star types are: A, F, G, K and M 
@@ -24,7 +24,7 @@ Allow a user to understand:
 *Enable the user to see exoplanet discoveries over time (by year). 
     They should be able to identify the trends in the discoveries. 
         A line chart is a good choice for this.  You may use other approaches- see note below.
-*Show the relationships between exoplanet radius and mass 
+Show the relationships between exoplanet radius and mass 
     Also show the planets from our solar system, highlighted though a distinct color and label them.  
     Consider whether to use a linear or logarithmic scale
     A scatterplot is a good choice for this.  You may use other approaches- see note below.
