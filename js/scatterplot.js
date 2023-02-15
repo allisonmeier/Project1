@@ -4,14 +4,16 @@ class Scatterplot {
         this.config = {
             parentElement: defaultConfig.parentElement,
             colorScale: defaultConfig.colorScale,
-            containerWidth: defaultConfig.containerWidth || 700,
-            containerHeight: defaultConfig.containerHeight || 300,
+            containerWidth: defaultConfig.containerWidth || 600,
+            containerHeight: defaultConfig.containerHeight || 400,
             margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 140},
             tooltipPadding: defaultConfig.tooltipPadding || 15
         }
         this.data = _data
         this.initVis()
     }
+
+    // option to show with outlier(s) versus without?
 
     initVis() {
         let vis = this
@@ -21,9 +23,11 @@ class Scatterplot {
 
         vis.xScale = d3.scaleLinear()
         //vis.xScale = d3.scaleLog()
+            //.domain([0,40])
             .range([0, vis.width])
 
         vis.yScale = d3.scaleLinear() //maybe change to scaleLog later
+            //.domain([0,100000])
             .range([vis.height, 0])
 
         vis.xAxis = d3.axisBottom(vis.xScale)
@@ -87,6 +91,24 @@ class Scatterplot {
                 .attr('r', 4)
                 .attr('cy', d => vis.yScale(vis.yValue(d)))
                 .attr('cx', d => vis.xScale(vis.xValue(d)))
+            .on('mouseover', (event, d) => {
+                d3.select('#tooltip')
+                    .style('display', 'block')
+                    .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
+                    .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                    
+                    .html(`
+                        <div class="tooltip-title">${d.pl_name}</div>
+                        <div><i>${d.sys_name} System</i></div>
+                        <ul>
+                        <li>${d.pl_rade} Earth-radii</li>
+                        <li>${d.pl_bmasse} Earth-masses</li>
+                        </ul>
+                    `)
+                })
+            .on('mouseleave', () => {
+                d3.select('#tooltip').style('display', 'none')
+            })
 
         vis.xAxisG
             .call(vis.xAxis)

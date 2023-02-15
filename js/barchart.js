@@ -83,6 +83,7 @@ class Barchart {
 
         let countedDataMap = d3.rollups(vis.data, v => v.length, d => d.sy_snum)
         vis.countedData = Array.from(countedDataMap, ([thing, numOfThing]) => ({thing, numOfThing}))
+        //worth looking at
 
         let orderedThings = ['0', '1', '2', '3', '4', '']
 
