@@ -20,6 +20,7 @@ class Scatterplot {
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom
 
         vis.xScale = d3.scaleLinear()
+        //vis.xScale = d3.scaleLog()
             .range([0, vis.width])
 
         vis.yScale = d3.scaleLinear() //maybe change to scaleLog later
@@ -42,7 +43,7 @@ class Scatterplot {
             .attr('class', 'axis x-axis')
             .attr('transform', `translate(0,${vis.height})`)
 
-        vis.yAxisG = vis.append('g')
+        vis.yAxisG = vis.chart.append('g')
             .attr('class', 'axis y-axis')
 
         vis.chart.append('text')
@@ -79,9 +80,13 @@ class Scatterplot {
         let vis = this
 
         // this is basically a circle constructor
-        /*const circles = vis.chart.selectAll('.point')
-            .data(vis.data, d => d.)
-        */
+        vis.circles = vis.chart.selectAll('.point')
+            .data(vis.data)
+            .join('circle')
+                .attr('class', 'point')
+                .attr('r', 4)
+                .attr('cy', d => vis.yScale(vis.yValue(d)))
+                .attr('cx', d => vis.xScale(vis.xValue(d)))
 
         vis.xAxisG
             .call(vis.xAxis)
