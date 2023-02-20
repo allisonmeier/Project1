@@ -13,6 +13,7 @@ class Barchart {
             xLabel: defaultConfig.xLabel || 'needs a label',
             yLabel: defaultConfig.yLabel || 'needs a label',
             title: defaultConfig.title || 'needs a title',
+            tooltipPadding: defaultConfig.tooltipPadding || 15,
         }
         this.data = _data
         this.initVis()
@@ -116,7 +117,7 @@ class Barchart {
     renderVis() {
         let vis = this
 
-        const bars = vis.chart.selectAll('.bar')
+        vis.bars = vis.chart.selectAll('.bar')
             .data(vis.countedData, vis.xValue)
             .join('rect')
                 .attr('class', 'bar')
@@ -125,6 +126,25 @@ class Barchart {
                 .attr('height', d => vis.height - vis.yScale(vis.yValue(d)))
                 .attr('y', d => vis.yScale(vis.yValue(d)))
                 .attr('fill', d => vis.colorScale(vis.colorValue(d)))
+              .on('mouseover', (event, d) => {
+                d3.select('#tooltip')
+                    .style('display', 'block')
+                    .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
+                    .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                    
+                    .html(`
+                        <div class="tooltip-title">More Info:</div>
+                        <ul>
+                        <li>Actual number: ${d.numOfThing} ${vis.config.yLabel}</li>
+                        <li>Category: ${d.thing + vis.config.xAxisFormat}</li>
+                        </ul>
+                    `)
+                })
+            .on('mouseleave', () => {
+                d3.select('#tooltip').style('display', 'none')
+            })
+
+
 
         vis.xAxisG.call(vis.xAxis)
         vis.yAxisG.call(vis.yAxis)
