@@ -7,6 +7,12 @@ class Barchart {
             containerWidth: defaultConfig.containerWidth || 700,
             containerHeight: defaultConfig.containerHeight || 300,
             margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 140},
+            selectedData: defaultConfig.selectedData, //format as (d => d.whatever) or it won't work
+            xAxisFormat: defaultConfig.xAxisFormat || '',
+            yAxisFormat: defaultConfig.yAxisFormat || '',
+            xLabel: defaultConfig.xLabel || 'needs a label',
+            yLabel: defaultConfig.yLabel || 'needs a label',
+            title: defaultConfig.title || 'needs a title',
         }
         this.data = _data
         this.initVis()
@@ -81,7 +87,7 @@ class Barchart {
     updateVis() {
         let vis = this
 
-        let countedDataMap = d3.rollups(vis.data, v => v.length, d => d.sy_snum)
+        let countedDataMap = d3.rollups(vis.data, v => v.length, vis.config.selectedData)
         vis.countedData = Array.from(countedDataMap, ([thing, numOfThing]) => ({thing, numOfThing}))
         //worth looking at
 

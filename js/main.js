@@ -32,7 +32,10 @@ d3.csv('../data/exoplanets.csv')
         d3.select()
 
 
-        let barchart = new Barchart({parentElement: '#barchart'}, data)
+        let barchart = new Barchart(
+            {parentElement: '#barchart',
+            selectedData: d => d.sy_snum,
+        }, data)
         barchart.updateVis()
 
         /*let linechart = new Linechart({parentElement: '#linechart'}, data)
