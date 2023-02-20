@@ -52,6 +52,15 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         planetBarchart.updateVis()
 
+        let starTypeBarchart = new Barchart(
+            {parentElement: '#starTypeBarchart',
+            selectedData: d => d.st_spectype.charAt(0),
+            colorScale: d3.schemePaired,
+            xLabel: 'Star Type',
+            yLabel: 'Exoplanets',
+            title: 'Orbiting Exoplanets vs. Star Type',
+        }, data)
+        starTypeBarchart.updateVis()
 
 
         /*let linechart = new Linechart({parentElement: '#linechart'}, data)

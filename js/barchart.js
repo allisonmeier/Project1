@@ -85,12 +85,19 @@ class Barchart {
 
     updateVis() {
         let vis = this
+        let orderedThings
+
+        if (vis.config.parentElement == '#starBarchart') {
+          orderedThings = ['1', '2', '3', '4', '']
+        } else if (vis.config.parentElement == '#planetBarchart') {
+          orderedThings = ['1', '2', '3', '4', '5', '6', '7', '8']
+        } else if (vis.config.parentElement == '#starTypeBarchart') {
+          orderedThings = ['A', 'F', 'G', 'K', 'M', '']
+        }
 
         let countedDataMap = d3.rollups(vis.data, v => v.length, vis.config.selectedData)
         vis.countedData = Array.from(countedDataMap, ([thing, numOfThing]) => ({thing, numOfThing}))
         //worth looking at
-
-        let orderedThings = ['0', '1', '2', '3', '4', '']
 
         vis.countedData = vis.countedData.sort((a,b) => {
             return orderedThings.indexOf(a.thing) - orderedThings.indexOf(b.thing)
