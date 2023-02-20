@@ -62,6 +62,8 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         starTypeBarchart.updateVis()
 
+        // https://d3-graph-gallery.com/graph/barplot_grouped_basicWide.html
+        let habitableZoneBarchart
 
         /*let linechart = new Linechart({parentElement: '#linechart'}, data)
         linechart.updateVis()*/
@@ -88,6 +90,13 @@ function inHabitableZone(starDistance, starType) {
             M - inner = 0.08 AU, outer = 0.12 AU
     */
    
+    var i
+    let habitable = 0
+    let notHabitable = 0
+
+    data.forEach(d => {d.sy_dist = +d.sy_dist}) //distance
+
+
     if (((starType == 'A') && (starDistance > 8.5) && (starDistance < 12.5))
         || ((starType == 'F') && (starDistance > 1.5) && (starDistance < 2.2))
         || ((starType == 'G') && (starDistance > 0.95) && (starDistance < 1.4))
