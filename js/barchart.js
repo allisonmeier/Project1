@@ -25,21 +25,20 @@ class Barchart {
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right 
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom 
     
-        //parametrize?
-        vis.colorScale = d3.scaleOrdinal()
-            .range(['#f1b5cd', '#dc6996', '#a0496b', 'blue', 'red', 'green'])
-            .domain(['1', '2', '3', '4', ''])
+        vis.colorScale = d3.scaleOrdinal(vis.config.colorScale)
+            //.range(['#f1b5cd', '#dc6996', '#a0496b', 'blue', 'red', 'green'])
+            //.domain(['1', '2', '3', '4', ''])
 
         vis.xScale = d3.scaleBand()
             .range([vis.width - 100, 0])
-            .padding(0.3)
+            .padding(0.1)
 
         vis.yScale = d3.scaleLinear()
             .range([vis.height, 0])
 
         vis.xAxis = d3.axisBottom(vis.xScale)
-            .ticks(['1 Star', '2 Stars', '3 Stars', '4 Stars', 'Unknown']) 
-            .tickFormat(d => d + ' stars') 
+            //.ticks(['1 Star', '2 Stars', '3 Stars', '4 Stars', 'Unknown']) 
+            .tickFormat(d => d + vis.config.xAxisFormat) 
     
         vis.yAxis = d3.axisLeft(vis.yScale)
             .ticks(10)
@@ -60,27 +59,27 @@ class Barchart {
         vis.yAxisG = vis.chart.append('g')
             .attr('class', 'axis y-axis')
 
-        vis.chart.append('text')
+        vis.svg.append('text')
             .attr('class', 'axis-title')
             .attr('y', vis.height + 20)
             .attr('x', vis.width/2 - 100)
             .attr('dy', '.71em')
             //.style('text-anchor', 'end')
-            .text('Stars in System') 
+            .text(vis.config.xLabel) 
     
         vis.svg.append('text')
             .attr('class', 'axis-title')
             .attr('x', 0)
             .attr('y', 6)
             .attr('dy', '.71em')
-            .text('Exoplanets') 
+            .text(vis.config.yLabel) 
     
         vis.svg.append('text')
             .attr('class', 'chart-title')
             .attr('x', 100)
             .attr('y', 330)
             .attr('dy', '.71em')
-            .text('Exoplanets per Stars in System') 
+            .text(vis.config.title) 
 
     }
 

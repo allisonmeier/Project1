@@ -1,8 +1,6 @@
 
 // loading data from exoplanets.csv (main data file with "" instead of "BLANK")
-
-let data, barchart, scatterplot, linechart
-let numStarsFilter = []
+let data
 
 d3.csv('../data/exoplanets.csv')
     .then(_data => {
@@ -32,11 +30,29 @@ d3.csv('../data/exoplanets.csv')
         d3.select()
 
 
-        let barchart = new Barchart(
-            {parentElement: '#barchart',
+        let starBarchart = new Barchart(
+            {parentElement: '#starBarchart',
             selectedData: d => d.sy_snum,
+            colorScale: d3.schemePaired,
+            xAxisFormat: ' Star(s)',
+            xLabel: 'Stars in System',
+            yLabel: 'Exoplanets',
+            title: 'Exoplanets vs. Stars in System',
         }, data)
-        barchart.updateVis()
+        starBarchart.updateVis()
+
+        let planetBarchart = new Barchart(
+            {parentElement: '#planetBarchart',
+            selectedData: d => d.sy_pnum,
+            colorScale: d3.schemePaired,
+            xAxisFormat: ' Planet(s)',
+            xLabel: 'Planets in System',
+            yLabel: 'Exoplanets',
+            title: 'Exoplanets vs. Total Planets in System',
+        }, data)
+        planetBarchart.updateVis()
+
+
 
         /*let linechart = new Linechart({parentElement: '#linechart'}, data)
         linechart.updateVis()*/
