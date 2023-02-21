@@ -39,10 +39,6 @@ class Scatterplot {
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
             .attr('height', vis.config.containerHeight)
-            //.translate([vis.width / 2, vis.height / 2])
-            /*.call(d3.zoom().on("zoom", function () {
-                vis.svg.attr("transform", d3.event.transform)
-             }))*/
 
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`)
@@ -72,14 +68,12 @@ class Scatterplot {
         vis.zoom = d3.zoom()
             .on('zoom', (event) => {
                 vis.chart.attr("transform", event.transform)
-                
                 vis.chart.selectAll('circle')
                     .transition()
                     .duration(300)
-                    .attr('r', 4.1 - (event.transform.k / 4))
+                    .attr('r', 4.1 - (event.transform.k / 4)) // has some serious issues when r <= 0. solve later.
             })
             .scaleExtent([1, 1000])
-
     }
 
     updateVis() {
