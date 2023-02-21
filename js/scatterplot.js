@@ -39,6 +39,10 @@ class Scatterplot {
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
             .attr('height', vis.config.containerHeight)
+            //.translate([vis.width / 2, vis.height / 2])
+            /*.call(d3.zoom().on("zoom", function () {
+                vis.svg.attr("transform", d3.event.transform)
+             }))*/
 
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`)
@@ -64,6 +68,17 @@ class Scatterplot {
             .attr('y', 0)
             .attr('dy', '.71em')
             .text('Radius');
+
+        vis.zoom = d3.zoom()
+            .on('zoom', (event) => {
+                vis.chart.attr("transform", event.transform)
+                
+                vis.chart.selectAll('circle')
+                    .transition()
+                    .duration(300)
+                    .attr('r', 4.1 - (event.transform.k / 4))
+            })
+            .scaleExtent([1, 1000])
 
     }
 
@@ -112,11 +127,12 @@ class Scatterplot {
 
         vis.xAxisG
             .call(vis.xAxis)
-            //.call(g => g.select('.domain').remove())
 
         vis.yAxisG
             .call(vis.yAxis)
-            //.call(g => g.select('.domain').remove)
+
+        vis.svg
+            .call(vis.zoom)
 
     }
 
