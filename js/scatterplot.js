@@ -70,8 +70,8 @@ class Scatterplot {
                 vis.chart.attr("transform", event.transform)
                 vis.chart.selectAll('circle')
                     .transition()
-                    .duration(300)
-                    .attr('r', 4.1 - (event.transform.k / 4)) // has some serious issues when r <= 0. solve later.
+                    .duration(750)
+                    .attr('r', (10 / event.transform.k))
             })
             .scaleExtent([1, 1000])
     }
