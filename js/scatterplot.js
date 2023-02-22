@@ -100,6 +100,8 @@ class Scatterplot {
                 .attr('r', 4)
                 .attr('cy', d => vis.yScale(vis.yValue(d)))
                 .attr('cx', d => vis.xScale(vis.xValue(d)))
+                .attr('fill', d3.schemePaired[9])
+                .attr('opacity', '0.5')
             .on('mouseover', (event, d) => {
                 d3.select('#tooltip')
                     .style('display', 'block')
