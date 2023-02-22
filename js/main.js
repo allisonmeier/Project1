@@ -62,6 +62,17 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         starTypeBarchart.updateVis()
 
+        let discoveryBarchart = new Barchart(
+            {parentElement: '#discoveryBarchart',
+            selectedData: d => d.discoverymethod,
+            colorScale: d3.schemePaired,
+            xLabel: 'Discovery Method',
+            yLabel: 'Exoplanets',
+            title: 'Exoplanets by Discovery Method',
+            //margin: {top: 5, right: 5, bottom: 100, left: 140},
+        }, data)
+        discoveryBarchart.updateVis()
+
         // https://d3-graph-gallery.com/graph/barplot_grouped_basicWide.html
         let habitableZoneBarchart
 

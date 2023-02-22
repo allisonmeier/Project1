@@ -38,12 +38,10 @@ class Barchart {
             .range([vis.height, 0])
 
         vis.xAxis = d3.axisBottom(vis.xScale)
-            //.ticks(['1 Star', '2 Stars', '3 Stars', '4 Stars', 'Unknown']) 
             .tickFormat(d => d + vis.config.xAxisFormat) 
     
         vis.yAxis = d3.axisLeft(vis.yScale)
             .ticks(10)
-            //.tickFormat(d => d + ' exoplanets') 
 
         //size of the overall svg 
         vis.svg = d3.select(vis.config.parentElement)
@@ -56,6 +54,16 @@ class Barchart {
         vis.xAxisG = vis.chart.append('g')
             .attr('class', 'axis x-axis')
             .attr('transform', `translate(0,${vis.height})`) 
+            .call(vis.xAxis)
+
+        if (vis.config.parentElement == '#discoveryBarchart') {
+            vis.xAxisG = vis.chart.append('g')
+                .selectAll('text')
+                    .style('text-anchor', 'end')
+                    .attr('dx', '-.8em')
+                    .attr('dy', '.15em')
+                    .attr('transform', 'rotate(-65)')
+        }
         
         vis.yAxisG = vis.chart.append('g')
             .attr('class', 'axis y-axis')
@@ -74,6 +82,7 @@ class Barchart {
             .attr('y', 6)
             .attr('dy', '.71em')
             .text(vis.config.yLabel) 
+            //.attr('transform', 'rotate(-90)')
     
         vis.svg.append('text')
             .attr('class', 'chart-title')
@@ -89,11 +98,13 @@ class Barchart {
         let orderedThings
 
         if (vis.config.parentElement == '#starBarchart') {
-          orderedThings = ['1', '2', '3', '4', '']
+            orderedThings = ['1', '2', '3', '4', '']
         } else if (vis.config.parentElement == '#planetBarchart') {
-          orderedThings = ['1', '2', '3', '4', '5', '6', '7', '8']
+            orderedThings = ['1', '2', '3', '4', '5', '6', '7', '8']
         } else if (vis.config.parentElement == '#starTypeBarchart') {
-          orderedThings = ['A', 'F', 'G', 'K', 'M', '']
+            orderedThings = ['A', 'F', 'G', 'K', 'M', '']
+        } else {
+            orderedThings = ['test1', 'test2', 'test3', 'test4', 'test5', '']
         }
 
         let countedDataMap = d3.rollups(vis.data, v => v.length, vis.config.selectedData)
