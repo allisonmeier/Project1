@@ -65,6 +65,9 @@ d3.csv('../data/exoplanets.csv')
         // https://d3-graph-gallery.com/graph/barplot_grouped_basicWide.html
         let habitableZoneBarchart
 
+        //https://d3-graph-gallery.com/graph/histogram_basic.html
+        let distanceHistogram
+
         /*let linechart = new Linechart({parentElement: '#linechart'}, data)
         linechart.updateVis()*/
 

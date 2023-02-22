@@ -65,6 +65,15 @@ class Scatterplot {
             .attr('dy', '.71em')
             .text('Radius');
 
+        vis.zoom = d3.zoom()
+            .on('zoom', (event) => {
+                vis.chart.attr("transform", event.transform)
+                vis.chart.selectAll('circle')
+                    .transition()
+                    .duration(750)
+                    .attr('r', (10 / event.transform.k))
+            })
+            .scaleExtent([1, 1000])
     }
 
     updateVis() {
@@ -112,11 +121,12 @@ class Scatterplot {
 
         vis.xAxisG
             .call(vis.xAxis)
-            //.call(g => g.select('.domain').remove())
 
         vis.yAxisG
             .call(vis.yAxis)
-            //.call(g => g.select('.domain').remove)
+
+        vis.svg
+            .call(vis.zoom)
 
     }
 
