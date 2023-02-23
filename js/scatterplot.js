@@ -13,21 +13,16 @@ class Scatterplot {
         this.initVis()
     }
 
-    // option to show with outlier(s) versus without?
-
     initVis() {
         let vis = this
 
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom
 
-        vis.xScale = d3.scaleLinear()
-        //vis.xScale = d3.scaleLog()
-            //.domain([0,40])
+        vis.xScale = d3.scaleLog() // FIX
             .range([0, vis.width])
 
-        vis.yScale = d3.scaleLinear() //maybe change to scaleLog later
-            //.domain([0,100000])
+        vis.yScale = d3.scaleLog() // FIX
             .range([vis.height, 0])
 
         vis.xAxis = d3.axisBottom(vis.xScale)
@@ -79,7 +74,6 @@ class Scatterplot {
     updateVis() {
         let vis = this
 
-        //vis.colorValue = d => d.pl_rade
         vis.xValue = d => d.pl_rade
         vis.yValue = d => d.pl_bmasse
 
@@ -92,7 +86,6 @@ class Scatterplot {
     renderVis() {
         let vis = this
 
-        // this is basically a circle constructor
         vis.circles = vis.chart.selectAll('.point')
             .data(vis.data)
             .join('circle')
