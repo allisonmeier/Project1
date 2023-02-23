@@ -1,72 +1,12 @@
-
-/*
-
-TO-DO
-
-- make each row of data into an array of info
-- figure out how to give it headers for columns
-- figure out how to make it update in response to other selections
-
-
-*/
-
-
-//------------------MAKING FUNCTIONS------------------
-
-
-// generate table head (the space allotted for the headers)
-function generateTableHead(table, tableData) {
-    let thead = table.createTHead()  
-    let row = thead.insertRow()
-    for (let key of tableData) {
-        let th = document.createElement('th')
-        let text = document.createTextNode(key)
-        th.appendChild(text)
-        row.appendChild(th)
-    }
-}
-
-// generate the rest of the table
-function generateTableBody(table, tableData) {
-    for (let element of tableData) {
-        let row = table.insertRow()
-        for (key in element) {
-            let cell = row.insertCell()
-            let text = document.createTextNode(element[key])
-            cell.appendChild(text)
-        }
-    }
-}
-
-//------------------USING FUNCTIONS------------------
-
-let rawData = [
-    { name: "Monte Falco", height: 1658, place: "Parco Foreste Casentinesi" },
-    { name: "Monte Falterona", height: 1654, place: "Parco Foreste Casentinesi" },
-    { name: "Poggio Scali", height: 1520, place: "Parco Foreste Casentinesi" },
-    { name: "Pratomagno", height: 1592, place: "Parco Foreste Casentinesi" },
-    { name: "Monte Amiata", height: 1738, place: "Siena" }
-]
-
-let table = document.querySelector('table')
-let tableData = Object.keys(rawData[0])
-
-
-generateTableBody(table, rawData)
-generateTableHead(table, tableData)
-    
-    
-    
-/*
 class Table {
 
     constructor(defaultConfig, _data) {
         this.config = {
             parentElement: defaultConfig.parentElement,
             colorScale: defaultConfig.colorScale,
-            containerWidth: defaultConfig.containerWidth || 300,
-            containerHeight: defaultConfig.containerHeight || 900,
-            margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 5},
+            containerWidth: defaultConfig.containerWidth || 700,
+            containerHeight: defaultConfig.containerHeight || 600,
+            margin: defaultConfig.margin || {top: 5, right: 20, bottom: 20, left: 20},
         }
         this.data = _data
         this.initVis()
@@ -75,22 +15,54 @@ class Table {
     initVis() {
         let vis = this
     
+        vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right 
+        vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom 
+
+        vis.svg = d3.select(vis.config.parentElement)
+            .attr('width', vis.config.containerWidth)
+            .attr('height', vis.config.containerHeight)
+            .append('g')
+                .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`) 
+
+
+        vis.table = document.querySelector('table')
+        
+        let tableData = Object.keys(vis.data[0])
+
+        // generating the table body
+        for (let element of vis.data) {
+            let row = vis.table.insertRow()
+            for (let key in element) {
+                let cell = row.insertCell()
+                let text = document.createTextNode(element[key])
+                cell.appendChild(text)
+            }
+        }
+
+        // and now the header
+        vis.thead = vis.table.createTHead()  
+        let row = vis.thead.insertRow()
+        for (let key of tableData) {
+            let th = document.createElement('th')
+            let text = document.createTextNode(key)
+            th.appendChild(text)
+            row.appendChild(th)
+        }
+    
     }
 
 
 
     updateVis() {
         let vis = this
-
         vis.renderVis()
     }
 
 
     renderVis() {
         let vis = this
-
     }
 
-*/
+}
 
 // https://www.valentinog.com/blog/html-table/#:~:text=function%20generateTableHead(table%2C%20data),)%3B%20let%20text%20%3D%20document.

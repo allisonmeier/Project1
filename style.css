@@ -49,8 +49,7 @@ padding-left: 20px;
 
 /* ---------------------STYLISH TABLE--------------------- */
 
-#table {
+#infoTable {
 overflow-y: auto;
-height: 200px;
 /*float: left;*/
 }

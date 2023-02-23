@@ -29,6 +29,10 @@ d3.csv('../data/exoplanets.csv')
         d3.select("#selected-dropdown")
         d3.select()
 
+        let infoTable = new Table(
+            {parentElement: '#infoTable',
+        }, data)
+        infoTable.updateVis()
 
         let starBarchart = new Barchart(
             {parentElement: '#starBarchart',
