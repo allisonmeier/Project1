@@ -52,5 +52,5 @@ padding-left: 20px;
 #table {
 overflow-y: auto;
 height: 200px;
-float: left;
+/*float: left;*/
 }
