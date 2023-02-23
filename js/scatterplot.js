@@ -9,7 +9,7 @@ class Scatterplot {
             margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 140},
             tooltipPadding: defaultConfig.tooltipPadding || 15
         }
-        this.data = _data
+        this.data = _data.filter(d => d.pl_bmasse != 0 && d.pl_rade != 0)
         this.initVis()
     }
 
@@ -77,8 +77,8 @@ class Scatterplot {
         vis.xValue = d => d.pl_rade
         vis.yValue = d => d.pl_bmasse
 
-        vis.xScale.domain([0, d3.max(vis.data, vis.xValue)])
-        vis.yScale.domain([0, d3.max(vis.data, vis.yValue)])
+        vis.xScale.domain([d3.min(vis.data, vis.xValue), d3.max(vis.data, vis.xValue)])
+        vis.yScale.domain([d3.min(vis.data, vis.yValue), d3.max(vis.data, vis.yValue)])
 
         vis.renderVis()
     }
