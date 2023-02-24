@@ -81,19 +81,18 @@ d3.csv('../data/exoplanets.csv')
         let habitableZoneBarchart
 
         //https://d3-graph-gallery.com/graph/histogram_basic.html
-        /*let distanceHistogram = new Histogram(
+        let distanceHistogram = new Histogram(
             {parentElement: '#distanceHistogram',
             selectedData: d => d.sy_dist,
-            colorScale: d3.schemePaired,
             xLabel: 'Distance',
             xAxisFormat: ' AU',
             yLabel: 'Exoplanets',
             title: 'Exoplanets vs. Distance to Us',
+            numBins: 10,
         }, data)
-        distanceHistogram.updateVis()*/
+        distanceHistogram.updateVis()
 
-        let linechart
-
+        //let linechart
         
         let scatterplot = new Scatterplot(
             {parentElement: '#scatterplot'}, 

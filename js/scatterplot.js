@@ -19,10 +19,10 @@ class Scatterplot {
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom
 
-        vis.xScale = d3.scaleLog() // FIX
+        vis.xScale = d3.scaleLog()
             .range([0, vis.width])
 
-        vis.yScale = d3.scaleLog() // FIX
+        vis.yScale = d3.scaleLog()
             .range([vis.height, 0])
 
         vis.xAxis = d3.axisBottom(vis.xScale)

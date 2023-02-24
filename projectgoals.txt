@@ -10,7 +10,7 @@ Load the exoplanet csv file (or a file derived from this original csv that you h
         Include a link which opens a new tab, leading the user to information about star types
     how many exoplanets were discovered by different methods
         Include a link that explains the different exoplanet discovery methods 
-    how many exoplanets are within a habitable zone vs outside the habitable zone.   
+    *how many exoplanets are within a habitable zone vs outside the habitable zone.   
         The habitable zone depends on both the distance between the star and the planet, and the type of star. 
         The habitable zone begins and ends according to the list below (in astronomical units)
             A - inner =  8.5 AU, outer = 12.5 AU
@@ -19,7 +19,7 @@ Load the exoplanet csv file (or a file derived from this original csv that you h
             K - inner = 0.38 AU, outer = 0.56 AU
             M - inner = 0.08 AU, outer = 0.12 AU
     Bar charts are a good choice for this.  You may use other approaches- see note below.
-*Allow users to see the distribution of exoplanets by their distance to us
+Allow users to see the distribution of exoplanets by their distance to us
     A histogram is a good choice for these visualizations.  You may use other approaches- see note below.
 *Enable the user to see exoplanet discoveries over time (by year). 
     They should be able to identify the trends in the discoveries. 
@@ -36,10 +36,10 @@ I provided suggestions for the chart types to use here (bar charts, line charts,
 
 B-GOALS---------------------------------------------------------------------------------------------------
 
-*To your application, add a table showing the exoplanet data.
-    *The user should be able to scroll through this table and see some of the information about the planets
+To your application, add a table showing the exoplanet data.
+    The user should be able to scroll through this table and see some of the information about the planets
     You do not need to show all of the information- decide what you think your user would be interested in seeing
-*Use tooltips to show additional information to users within all the visualizations you have created for the C-goals.  
+Use tooltips to show additional information to users within all the visualizations you have created for the C-goals.  
 *Bar chart selections, updates:
     *For the bar chart visualizations ( habitable zone planets, # of stars in the system, # planets in the system, star types and discovery methods)
     *The user should be able to select a bar
@@ -56,7 +56,10 @@ A-goals-------------------------------------------------------------------------
 
 *Handle missing data.  All data should be loaded.  In your documentation, describe how you handed data points with missing fields. 
 *Include sketches of your exoplanet browser design and the brushing and linking interactions.  
-*Exoplanet system browser:  I want to be able to see more information about these planetary systems.  Create an exoplanet system browser.  I should be able to select a specific exoplanet from the table or from the scatterplot.  Then, I want to be able to learn more about that exoplanet and the system it comes from.  Include sketches of your idea, to plan your intended view. For the selected system, user should be able to see:
+*Exoplanet system browser:  I want to be able to see more information about these planetary systems.  Create an exoplanet system browser.  
+I should be able to select a specific exoplanet from the table or from the scatterplot.  
+Then, I want to be able to learn more about that exoplanet and the system it comes from.  
+Include sketches of your idea, to plan your intended view. For the selected system, user should be able to see:
     The distances of the planets to their star
     The orbits of the planets around their star (note, these are ellipses)
     The sizes of the planets
