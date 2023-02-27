@@ -95,24 +95,40 @@ class Barchart {
 
     updateVis() {
         let vis = this
-        let orderedThings
+        let orderedThings, countedDataMap
 
         if (vis.config.parentElement == '#starBarchart') {
-            orderedThings = ['1', '2', '3', '4', '']
+            orderedThings = [4,3,2,1]
         } else if (vis.config.parentElement == '#planetBarchart') {
-            orderedThings = ['1', '2', '3', '4', '5', '6', '7', '8']
+            orderedThings = [8,7,6,5,4,3,2,1]
         } else if (vis.config.parentElement == '#starTypeBarchart') {
-            orderedThings = ['A', 'F', 'G', 'K', 'M', '']
+            orderedThings = ['Unknown', 'Other', 'M', 'K', 'G', 'F', 'A']
         } else {
             orderedThings = ['test1', 'test2', 'test3', 'test4', 'test5', '']
         }
 
-        let countedDataMap = d3.rollups(vis.data, v => v.length, vis.config.selectedData)
-        vis.countedData = Array.from(countedDataMap, ([thing, numOfThing]) => ({thing, numOfThing}))
-
-        vis.countedData = vis.countedData.sort((a,b) => {
-            return orderedThings.indexOf(a.thing) - orderedThings.indexOf(b.thing)
-        })
+        if (vis.config.parentElement == '#starTypeBarchart') {
+            vis.data.forEach(d => {
+                if (d.st_spectype.charAt(0)!='A' && d.st_spectype.charAt(0)!='F' 
+                    && d.st_spectype.charAt(0)!='G' && d.st_spectype.charAt(0)!='K' 
+                    && d.st_spectype.charAt(0)!='M' && d.st_spectype.charAt(0)!='') {
+                    d.st_spectype = 'Other'
+                } else if (d.st_spectype.charAt(0) == '' ) {
+                    d.st_spectype = 'Unknown'
+                } else {
+                    d.st_spectype = d.st_spectype.charAt(0)
+                }
+            })
+            countedDataMap = d3.rollups(vis.data, v => v.length, d => d.st_spectype)
+        } else {
+            countedDataMap = d3.rollups(vis.data, v => v.length, vis.config.selectedData)
+        }
+        
+        vis.countedData = Array
+            .from(countedDataMap, ([thing, numOfThing]) => ({thing, numOfThing}))
+            .sort((a,b) => {
+                return orderedThings.indexOf(a.thing) - orderedThings.indexOf(b.thing)
+            })
 
         vis.colorValue = d => d.thing
         vis.xValue = d => d.thing

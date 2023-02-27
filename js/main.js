@@ -58,7 +58,7 @@ d3.csv('../data/exoplanets.csv')
 
         let starTypeBarchart = new Barchart(
             {parentElement: '#starTypeBarchart',
-            selectedData: d => d.st_spectype.charAt(0),
+            selectedData: d => d.st_spectype,
             colorScale: d3.schemePaired,
             xLabel: 'Star Type',
             yLabel: 'Exoplanets',

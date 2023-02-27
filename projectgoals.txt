@@ -21,7 +21,7 @@ Load the exoplanet csv file (or a file derived from this original csv that you h
     Bar charts are a good choice for this.  You may use other approaches- see note below.
 Allow users to see the distribution of exoplanets by their distance to us
     A histogram is a good choice for these visualizations.  You may use other approaches- see note below.
-*Enable the user to see exoplanet discoveries over time (by year). 
+Enable the user to see exoplanet discoveries over time (by year). 
     They should be able to identify the trends in the discoveries. 
         A line chart is a good choice for this.  You may use other approaches- see note below.
 Show the relationships between exoplanet radius and mass 
