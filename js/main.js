@@ -92,7 +92,10 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         distanceHistogram.updateVis()
 
-        //let linechart
+        let linechart = new Linechart(
+            {parentElement: '#linechart'}, 
+            data)
+        linechart.updateVis()
         
         let scatterplot = new Scatterplot(
             {parentElement: '#scatterplot'}, 

@@ -26,10 +26,10 @@ class Linechart {
             .nice()
 
         vis.xAxis = d3.axisBottom()
-            .ticks(10) //may need to change if this doesnt look good
+            .ticks(10)
         
         vis.yAxis = d3.axisLeft()
-            .ticks(5) //this also may need changed
+            .ticks(10)
 
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
@@ -51,52 +51,48 @@ class Linechart {
         let vis = this
 
         let countedDataMap = d3.rollups(vis.data, v => v.length, d => d.disc_year)
-        vis.countedData = Array.from(countedDataMap, ([thing, numOfThing]) => ({thing, numOfThing}))
+        
+        vis.countedDataArray = Array
+            .from(countedDataMap, ([year, numOccurences]) => ({year, numOccurences}))
+            .sort((a,b) => {
+                return a.year - b.year;
+            })
 
-        let orderedYears = []
-        orderedYears.push(data.forEach(d => d.disc_year)) 
-        // is this working...?
-        // fyi: orderedYears should be an array
+        console.log(vis.countedDataArray)
 
-        vis.countedData = vis.countedData.sort((a,b) => {
-            return orderedYears.indexOf(a.thing) - orderedYears.indexOf(b.thing)
-        })
+        vis.xValue = d => d.year //d.disc_year, year
+        vis.yValue = d => d.numOccurences // num discoveries
 
-        vis.xValue = d => d.thing //d.disc_year, year
-        vis.yValue = d => d.numOfThing // num discoveries
+        //console.log(vis.countedDataArray.forEach(d => d.year))
 
-        //vis.area - this fills in the bottom and looks cute 
+        
+        vis.xScale.domain(d3.extent(vis.countedDataArray, vis.xValue))
+        vis.yScale.domain(d3.extent(vis.countedDataArray, vis.yValue))
+        
 
         vis.line = d3.line()
             .x(d => vis.xScale(vis.xValue(d)))
             .y(d => vis.yScale(vis.yValue(d)))
-        
-        vis.xScale.domain(d3.extent(vis.data, vis.xValue))
-        vis.yScale.domain(d3.extent(vis.data, vis.yValue))
-        
-        vis.renderVis()
 
-        /**Enable the user to see exoplanet discoveries over time (by year). 
-            They should be able to identify the trends in the discoveries. 
-            A line chart is a good choice for this.*/
+        vis.renderVis()
 
     }
 
     renderVis() {
         let vis = this 
 
-        vis.chart
+        /*vis.chart
             .append("path")
-            .data([vis.data])
+            .data([vis.countedDataArray])
             .attr("class", "chart-area")
-            .attr("d", vis.area);
+            //.attr("d", vis.area);*/
 
         // Add line path
         vis.chart
             .append("path")
-            .data([vis.data])
+            .data([vis.countedDataArray])
             .attr("class", "chart-line")
-            .attr("d", vis.line);
+            .attr("d", vis.line)
 
         // Update the axes
         vis.xAxisG.call(vis.xAxis);
