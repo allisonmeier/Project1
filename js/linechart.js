@@ -4,7 +4,7 @@ class Linechart {
         this.config = {
             parentElement: defaultConfig.parentElement,
             colorScale: defaultConfig.colorScale,
-            containerWidth: defaultConfig.containerWidth || 600,
+            containerWidth: defaultConfig.containerWidth || 700,
             containerHeight: defaultConfig.containerHeight || 300,
             margin: defaultConfig.margin || {top: 5, right: 5, bottom: 20, left: 40},
         }
@@ -23,12 +23,13 @@ class Linechart {
 
         vis.yScale = d3.scaleLinear()
             .range([vis.height, 0])
-            .nice()
+            //.nice()
 
-        vis.xAxis = d3.axisBottom()
+        vis.xAxis = d3.axisBottom(vis.xScale)
             .ticks(10)
+            .tickFormat(d3.format('d'))
         
-        vis.yAxis = d3.axisLeft()
+        vis.yAxis = d3.axisLeft(vis.yScale)
             .ticks(10)
 
         vis.svg = d3.select(vis.config.parentElement)
@@ -43,7 +44,29 @@ class Linechart {
             .attr('transform', `translate(0,${vis.height})`)
 
         vis.yAxisG = vis.chart.append('g')
-            .attr('class', 'axis y-axis')        
+            .attr('class', 'axis y-axis')      
+            
+        vis.chart.append('text')
+            .attr('class', 'axis-title')
+            .attr('y', vis.height - 15)
+            .attr('x', vis.width + 10)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Year');
+
+        vis.svg.append('text')
+            .attr('class', 'axis-title')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('dy', '.71em')
+            .text('Discoveries')
+
+        vis.svg.append('text')
+            .attr('class', 'chart-title')
+            .attr('x', 100)
+            .attr('y', 330)
+            .attr('dy', '.71em')
+            .text('Exoplanet Discovieries per Year') 
 
     }
 
@@ -58,18 +81,12 @@ class Linechart {
                 return a.year - b.year;
             })
 
-        console.log(vis.countedDataArray)
-
         vis.xValue = d => d.year //d.disc_year, year
         vis.yValue = d => d.numOccurences // num discoveries
 
-        //console.log(vis.countedDataArray.forEach(d => d.year))
-
-        
         vis.xScale.domain(d3.extent(vis.countedDataArray, vis.xValue))
         vis.yScale.domain(d3.extent(vis.countedDataArray, vis.yValue))
         
-
         vis.line = d3.line()
             .x(d => vis.xScale(vis.xValue(d)))
             .y(d => vis.yScale(vis.yValue(d)))
@@ -81,23 +98,14 @@ class Linechart {
     renderVis() {
         let vis = this 
 
-        /*vis.chart
-            .append("path")
-            .data([vis.countedDataArray])
-            .attr("class", "chart-area")
-            //.attr("d", vis.area);*/
-
-        // Add line path
         vis.chart
             .append("path")
             .data([vis.countedDataArray])
             .attr("class", "chart-line")
             .attr("d", vis.line)
 
-        // Update the axes
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);
-
 
     }
 

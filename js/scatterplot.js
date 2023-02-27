@@ -58,7 +58,14 @@ class Scatterplot {
             .attr('x', 0)
             .attr('y', 0)
             .attr('dy', '.71em')
-            .text('Radius');
+            .text('Radius')
+
+        vis.svg.append('text')
+            .attr('class', 'chart-title')
+            .attr('x', 100)
+            .attr('y', 330)
+            .attr('dy', '.71em')
+            .text('Exoplanet Mass vs. Radius') 
 
         vis.zoom = d3.zoom()
             .on('zoom', (event) => {
