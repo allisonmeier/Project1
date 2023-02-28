@@ -10,7 +10,7 @@ Load the exoplanet csv file (or a file derived from this original csv that you h
         Include a link which opens a new tab, leading the user to information about star types
     how many exoplanets were discovered by different methods
         Include a link that explains the different exoplanet discovery methods 
-    *how many exoplanets are within a habitable zone vs outside the habitable zone.   
+    how many exoplanets are within a habitable zone vs outside the habitable zone.   
         The habitable zone depends on both the distance between the star and the planet, and the type of star. 
         The habitable zone begins and ends according to the list below (in astronomical units)
             A - inner =  8.5 AU, outer = 12.5 AU

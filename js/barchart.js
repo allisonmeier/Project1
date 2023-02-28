@@ -22,13 +22,10 @@ class Barchart {
     initVis() {
         let vis = this
 
-        //size of the chart itself (container minus margins)
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right 
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom 
     
         vis.colorScale = d3.scaleOrdinal(vis.config.colorScale)
-            //.range(['#f1b5cd', '#dc6996', '#a0496b', 'blue', 'red', 'green'])
-            //.domain(['1', '2', '3', '4', ''])
 
         vis.xScale = d3.scaleBand()
             .range([vis.width - 100, 0])
@@ -103,6 +100,8 @@ class Barchart {
             orderedThings = [8,7,6,5,4,3,2,1]
         } else if (vis.config.parentElement == '#starTypeBarchart') {
             orderedThings = ['Unknown', 'Other', 'M', 'K', 'G', 'F', 'A']
+        } else if (vis.config.parentElement == '#habitableZoneBarchart') {
+            orderedThings = ['Uninhabitable', 'Inhabitable']
         } else {
             orderedThings = ['test1', 'test2', 'test3', 'test4', 'test5', '']
         }
@@ -112,14 +111,31 @@ class Barchart {
                 if (d.st_spectype.charAt(0)!='A' && d.st_spectype.charAt(0)!='F' 
                     && d.st_spectype.charAt(0)!='G' && d.st_spectype.charAt(0)!='K' 
                     && d.st_spectype.charAt(0)!='M' && d.st_spectype.charAt(0)!='') {
-                    d.st_spectype = 'Other'
+                    d.type = 'Other'
                 } else if (d.st_spectype.charAt(0) == '' ) {
-                    d.st_spectype = 'Unknown'
+                    d.type = 'Unknown'
                 } else {
-                    d.st_spectype = d.st_spectype.charAt(0)
+                    d.type = d.st_spectype.charAt(0)
                 }
             })
-            countedDataMap = d3.rollups(vis.data, v => v.length, d => d.st_spectype)
+            countedDataMap = d3.rollups(vis.data, v => v.length, d => d.type)
+        } else if (vis.config.parentElement == '#habitableZoneBarchart') {
+            let habitableData = vis.data.filter(d => (d.st_spectype.charAt(0)=='A' || d.st_spectype.charAt(0)=='F' 
+                    || d.st_spectype.charAt(0)=='G' || d.st_spectype.charAt(0)=='K' || d.st_spectype.charAt(0)=='M') 
+                    && d.pl_orbsmax!='')
+
+            habitableData.forEach(d => {
+                if (((d.st_spectype.charAt(0) == 'A') && (d.pl_orbsmax > 8.5) && (d.pl_orbsmax < 12.5))
+                || ((d.st_spectype.charAt(0) == 'F') && (d.pl_orbsmax > 1.5) && (d.pl_orbsmax < 2.2))
+                || ((d.st_spectype.charAt(0) == 'G') && (d.pl_orbsmax > 0.95) && (d.pl_orbsmax < 1.4))
+                || ((d.st_spectype.charAt(0) == 'K') && (d.pl_orbsmax > 0.38) && (d.pl_orbsmax < 0.56))
+                || ((d.st_spectype.charAt(0) == 'M') && (d.pl_orbsmax > 0.08) && (d.pl_orbsmax < 0.12))) {
+                    d.isInhabitable = 'Inhabitable'
+                } else {
+                    d.isInhabitable = 'Uninhabitable'
+                }
+            })
+            countedDataMap = d3.rollups(habitableData, v => v.length, d => d.isInhabitable)
         } else {
             countedDataMap = d3.rollups(vis.data, v => v.length, vis.config.selectedData)
         }
