@@ -173,7 +173,6 @@ class Barchart {
                     .style('display', 'block')
                     .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
                     .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-                    
                     .html(`
                         <div class="tooltip-title">More Info:</div>
                         <ul>
@@ -185,6 +184,16 @@ class Barchart {
             .on('mouseleave', () => {
                 d3.select('#tooltip').style('display', 'none')
             })
+            .on('click', function(event, d) {
+                const isActive = dataFilter.includes(d.key)
+                if (isActive) {
+                    dataFilter = dataFilter.filter(f => f !== d.key); // Remove filter
+                } else {
+                    dataFilter.push(d.key) // Append filter
+                }
+                filterData(d.thing) // Call global function to update other charts
+                d3.select(this).classed('active', !isActive); // Add class to style active filters with CSS
+              })
 
 
 

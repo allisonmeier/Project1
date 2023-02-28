@@ -16,6 +16,40 @@ class Scatterplot {
     initVis() {
         let vis = this
 
+        vis.data.forEach(d => {d.source = 'notOurSystem'})
+
+        vis.data.push(
+                {pl_name: 'Mercury', pl_bmasse: 0.055, pl_rade: 0.38, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Venus', pl_bmasse: 0.8, pl_rade: 0.95, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Earth', pl_bmasse: 1, pl_rade: 1, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Mars', pl_bmasse: 0.107, pl_rade: 0.53, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Jupiter', pl_bmasse: 317.8, pl_rade: 11.2, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Saturn', pl_bmasse: 95, pl_rade: 9.13, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Uranus', pl_bmasse: 14.5, pl_rade: 4, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Neptune', pl_bmasse: 17.1, pl_rade: 3.9, source: 'ourSystem', sys_name: 'Home'},
+                {pl_name: 'Pluto', pl_bmasse: 0.0022, pl_rade: 0.187, source: 'ourSystem', sys_name: 'Home'},
+                )
+                
+        vis.data.forEach(d => {
+            if (d.pl_bmasse < 0.00001) {
+                d.type = 'Asteroidan'
+            } else if (d.pl_bmasse >= 0.00001 && d.pl_bmasse < 0.1) {
+                d.type = 'Mercurian'
+            } else if (d.pl_bmasse >= 0.01 && d.pl_bmasse < 0.5) {
+                d.type = 'Subterran'
+            } else if (d.pl_bmasse >= 0.05 && d.pl_bmasse < 2) {
+                d.type = 'Terran'
+            } else if (d.pl_bmasse >= 2 && d.pl_bmasse < 10) {
+                d.type = 'Superterran'
+            } else if (d.pl_bmasse >= 10 && d.pl_bmasse < 50) {
+                d.type = 'Neptunian'
+            } else if (d.pl_bmasse >= 50 && d.pl_bmasse < 5000) {
+                d.type = 'Jovian'
+            }
+        })
+
+
+
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom
 
@@ -81,6 +115,7 @@ class Scatterplot {
     updateVis() {
         let vis = this
 
+        vis.colorValue = d => d.source
         vis.xValue = d => d.pl_rade
         vis.yValue = d => d.pl_bmasse
 
@@ -100,7 +135,7 @@ class Scatterplot {
                 .attr('r', 4)
                 .attr('cy', d => vis.yScale(vis.yValue(d)))
                 .attr('cx', d => vis.xScale(vis.xValue(d)))
-                .attr('fill', d3.schemePaired[9])
+                .attr('fill', d => vis.config.colorScale(vis.colorValue(d)))
                 .attr('opacity', '0.5')
             .on('mouseover', (event, d) => {
                 d3.select('#tooltip')
@@ -114,6 +149,7 @@ class Scatterplot {
                         <ul>
                         <li>${d.pl_rade} Earth-radii</li>
                         <li>${d.pl_bmasse} Earth-masses</li>
+                        <li>${d.type} Planet Type</li>
                         </ul>
                     `)
                 })

@@ -1,6 +1,9 @@
 
 // loading data from exoplanets.csv (main data file with "" instead of "BLANK")
 let data
+let infoTable, starBarchart, planetBarchart, starTypeBarchart, discoveryBarchart, 
+    habitableZoneBarchart, distanceHistogram, linechart, scatterplot
+let dataFilter = []
 
 d3.csv('../data/exoplanets.csv')
     .then(_data => {
@@ -29,12 +32,12 @@ d3.csv('../data/exoplanets.csv')
         d3.select("#selected-dropdown")
         d3.select()
 
-        let infoTable = new Table(
+        infoTable = new Table(
             {parentElement: '#infoTable',
         }, data)
         infoTable.updateVis()
 
-        let starBarchart = new Barchart(
+        starBarchart = new Barchart(
             {parentElement: '#starBarchart',
             selectedData: d => d.sy_snum,
             colorScale: d3.schemePaired,
@@ -45,7 +48,7 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         starBarchart.updateVis()
 
-        let planetBarchart = new Barchart(
+        planetBarchart = new Barchart(
             {parentElement: '#planetBarchart',
             selectedData: d => d.sy_pnum,
             colorScale: d3.schemePaired,
@@ -56,7 +59,7 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         planetBarchart.updateVis()
 
-        let starTypeBarchart = new Barchart(
+        starTypeBarchart = new Barchart(
             {parentElement: '#starTypeBarchart',
             selectedData: d => d.st_spectype,
             colorScale: d3.schemePaired,
@@ -66,7 +69,7 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         starTypeBarchart.updateVis()
 
-        let discoveryBarchart = new Barchart(
+        discoveryBarchart = new Barchart(
             {parentElement: '#discoveryBarchart',
             selectedData: d => d.discoverymethod,
             colorScale: d3.schemePaired,
@@ -78,7 +81,7 @@ d3.csv('../data/exoplanets.csv')
         discoveryBarchart.updateVis()
 
         // https://d3-graph-gallery.com/graph/barplot_grouped_basicWide.html
-        let habitableZoneBarchart = new Barchart(
+        habitableZoneBarchart = new Barchart(
             {parentElement: '#habitableZoneBarchart',
             selectedData: d => d.sy_dist,
             colorScale: d3.schemePaired,
@@ -91,7 +94,7 @@ d3.csv('../data/exoplanets.csv')
 
 
         //https://d3-graph-gallery.com/graph/histogram_basic.html
-        let distanceHistogram = new Histogram(
+        distanceHistogram = new Histogram(
             {parentElement: '#distanceHistogram',
             selectedData: d => d.sy_dist,
             xLabel: 'Distance',
@@ -102,17 +105,40 @@ d3.csv('../data/exoplanets.csv')
         }, data)
         distanceHistogram.updateVis()
 
-        let linechart = new Linechart(
+        linechart = new Linechart(
             {parentElement: '#linechart'}, 
             data)
         linechart.updateVis()
         
-        let scatterplot = new Scatterplot(
-            {parentElement: '#scatterplot'}, 
-            data)
+        scatterplot = new Scatterplot(
+            {parentElement: '#scatterplot',
+            colorScale: d3.scaleOrdinal().range([d3.schemePaired[9], d3.schemePaired[4]])
+        }, data)
         scatterplot.updateVis()
 
         })
         
         .catch(error => console.error(error));
 
+// FUNCTION(S) --------------------------------
+
+function filterData(key) {
+    if (dataFilter.length == 0) {
+        data = data;
+    } else {
+        data = data.filter(d => dataFilter.includes(key)) // d.key
+        //scatterplot.data = data.filter(d => difficultyFilter.includes(d.difficulty));
+    }
+    infoTable.updateVis() 
+    starBarchart.updateVis()  
+    planetBarchart.updateVis()  
+    starTypeBarchart.updateVis()  
+    discoveryBarchart.updateVis() 
+    habitableZoneBarchart.updateVis()  
+    distanceHistogram.updateVis()  
+    linechart.updateVis()  
+    scatterplot.updateVis() 
+
+    console.log('did it')
+    console.log(data)
+    }

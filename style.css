@@ -1,10 +1,44 @@
 /* ---------------------CHART BONES--------------------- */
 
 /*
-#dropdown, #starBarchart, #planetBarchart, 
-#starTypeBarchart, #habitableZoneBarchart,
-#linechart, #scatterplot {
-  float: right;
+.item1 {
+  grid-area: infoTable;
+  overflow-y: auto;
+}
+.item2 {
+  grid-area: starBarchart;
+}
+.item3 {
+  grid-area: planetBarchart;
+}
+.item4 {
+  grid-area: starTypeBarchart;
+}
+.item5 {
+  grid-area: discoveryBarchart;
+}
+.item6 {
+  grid-area: habitableZoneBarchart;
+}
+.item7 {
+  grid-area: distanceHistogram;
+}
+.item8 {
+  grid-area: linechart;
+}
+.item9 {
+  grid-area: scatterplot;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: 
+    'infoTable infoTable linechart linechart scatterplot scatterplot'
+    'infoTable infoTable '
+    'infoTable infoTable'
+    ''
+    ''
+  ;
 }
 */
 
@@ -49,9 +83,16 @@ padding-left: 20px;
 
 /* ---------------------STYLISH TABLE--------------------- */
 
+h1, h3 {
+text-align: center;
+}
+
+rect:hover {
+  border: 3px black;
+}
+
 #infoTable {
-overflow-y: auto;
-width: 700px;
-height: 600px;
-/*float: left;*/
+  overflow-y: auto;
+  width: 700px;
+  height: 600px;
 }
